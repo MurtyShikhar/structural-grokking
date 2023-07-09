@@ -22,7 +22,12 @@ The script in `train_transformers.py` may be used to train transformer LMs of va
 python train_transformers.py --dataset lm --save_dir /path/to/save/dir --encoder_depth 6
 ```
 
-To modify number of training steps / checkpoint saving frequency, please take a look at `trainin_utils.py`. To run analyses like computing tree projections, take a look at `transformer_lm_sci.py`. 
+To modify number of training steps / checkpoint saving frequency, please take a look at `trainin_utils.py`. 
+
+## Computing Tree Projections
+For computing tree projections, take a look at `transformer_lm_sci.py`. We provide a minimal implementation of the tree projections method (**for auto-regressive LMs**) in the `tree_projections` folder. 
+
+> :warning: Please note that this implementation is specifically made for models with **causal masking** and will not work for bi-directional models. If you want an implementation for bidirectional models, check out the original [Tree Projections codebase](https://github.com/MurtyShikhar/TreeProjections).
 
 ## Reproducing Plots
 We provide all the raw data for reproducing plots in our paper. Please run the notebooks in the `notebooks` folder, after unzipping `sci.tar.gz`.
