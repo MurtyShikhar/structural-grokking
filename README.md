@@ -33,7 +33,7 @@ For computing tree projections, take a look at `transformer_lm_sci.py`. We provi
 We provide all the raw data for reproducing plots in our paper. Please run the notebooks in the `notebooks` folder, after unzipping `sci.tar.gz`.
 
 ## Citing this work
-If you use tree projections in your work, we kindly ask you to cite our paper:
+If you use ideas from this paper in your work, we kindly ask you to cite us as:
 ```
 @inproceedings{
 murty2023structure,
