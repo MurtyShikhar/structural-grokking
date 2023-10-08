@@ -19,7 +19,7 @@ Datasets used in this work can be found under data_utils. More specificially, `d
 The script in `train_transformers.py` may be used to train transformer LMs of various sizes. Below trains a 6 layer transformer LM on question-formation.
 ```
 # checkpoints saved under /path/to/save/dir
-python train_transformers.py --dataset lm --save_dir /path/to/save/dir --encoder_depth 6
+python train_transformers.py --dataset lm --save_dir /path/to/save/dir --encoder_n_layers 6
 ```
 
 To modify number of training steps / checkpoint saving frequency, please take a look at `trainin_utils.py`. 
