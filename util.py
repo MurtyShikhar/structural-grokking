@@ -1,4 +1,3 @@
-from data_utils import build_datasets, build_datasets_semparse, build_datasets_pcfg
 from transformer_helpers import create_model
 import torch
 from transformers import AutoTokenizer, RobertaForMaskedLM
@@ -198,51 +197,3 @@ def get_masking_info(tokenizer, input_strs, fn, **kwargs):
         sentence2idx_tuple.append(relative_idxs)
 
     return sentence2idx_tuple, masked_strs, input_masks
-
-
-def get_model_and_tokenizer(args):
-    if args.dataset == "cogs":
-        _, in_vocab, out_vocab, inp_sentences, _ = build_datasets()
-    elif args.dataset == "geoquery":
-        _, in_vocab, out_vocab, inp_sentences, _ = build_datasets_semparse(
-            "semparse/geoquery.pickle"
-        )
-    else:
-        _, in_vocab, out_vocab, inp_sentences, _ = build_datasets_pcfg(
-            use_singleton=True, use_no_commas=True
-        )
-    if args.is_pretrained:
-        model = RobertaForMaskedLM.from_pretrained(args.model_name)
-        tokenizer = AutoTokenizer.from_pretrained(args.model_name)
-    else:
-        model_name = args.model_name.split("/")[-1].split(".")[0]
-        print(model_name)
-        N_HEADS = 4
-        VEC_DIM = 512
-        ENCODER_LAYERS = args.encoder_depth
-        DECODER_LAYERS = 2
-        model = create_model(
-            len(in_vocab),
-            len(out_vocab),
-            VEC_DIM,
-            N_HEADS,
-            ENCODER_LAYERS,
-            DECODER_LAYERS,
-        )
-        model.load_state_dict(
-            torch.load(args.model_name, map_location=torch.device("cpu"))
-        )
-
-        def tokenizer_fn(model):
-            def fn(s, add_special_tokens=True):
-                if add_special_tokens:
-                    return [model.encoder_sos] + in_vocab(s) + [model.encoder_eos]
-                else:
-                    return in_vocab(s)
-
-            return fn
-
-        tokenizer = tokenizer_fn(model)
-    device = torch.device("cuda")
-    model.to(device)
-    return model, tokenizer, inp_sentences
