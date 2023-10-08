@@ -1,5 +1,4 @@
 import torch
-from mlm_collator import MaskCollator
 import sequence
 from tqdm import tqdm
 import os
