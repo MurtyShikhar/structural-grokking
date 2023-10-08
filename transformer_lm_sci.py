@@ -23,7 +23,6 @@ from tqdm import tqdm
 from util import set_seed
 import random
 
-from graph_node import Graph
 from parse_q_and_tense import parse_question, parse_tense, convert_to_parse
 
 
